@@ -1,11 +1,540 @@
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .tasksList
+    {
+      display: grid;
+      grid-template-columns: 100%;
+      width: 100%;
+    }
+    body
+    {
+      display: flex;
+      justify-content: center;
+    }
+    .div-50
+    {
+      width: 50%;
+      height: calc(100% - 50px);
+      display: flex;
+      align-items:center ;
+      flex-direction: column;
+      padding-top: 50px;
+    }
+    .input
+    {
+      position: relative;
+      width: 100%;
+    }
+    .Task_card
+      {
+        border:1px solid black;
+        border-radius:4px;
+        padding: 10px;
+        display: grid;
+        grid-template-columns:20px 1fr 20px;
+        margin-bottom: 5px;
+      }
+      .delete
+      {
+        cursor: pointer;
+      }
+    input
+    {
+      padding: 10px;
+      transition-duration: 0.2s;
+      border-radius: 7px;
+      border: 1px solid black;
+      width: 100%;
+    }
+    .button
+    {
+      width: 100%;
+      padding: 5px;
+      display: flex;
+      justify-content: center;
+
+    }
+    .center_button
+    {
+      border:1px solid black;
+      border-radius: 5px;
+      width: 65px;
+      display: flex;
+      height: 30px;
+      position: relative;
+      
+    }
+    .center_button::after
+    {
+      
+      position: absolute;
+      left: 16px;
+      top: 5px;
+    }
+    .div-50:nth-child(2) .center_button:nth-child(1)::after
+    {
+      content:'Clear';
+    }
+   .div-50:nth-child(1) .center_button:nth-child(1)::after
+    {
+      content:'Add';
+    }
+    .q
+    {
+      width: 25%;
+      transition-duration: 0.5s;
+      height: 100%;
+    }
+    .q:nth-child(1)::after
+    {
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+    }
+    .q:nth-child(4)::after
+    {
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+    }
+    .q::after
+    {
+      background-image: linear-gradient(to bottom,Purple,red);
+      height: 100%;
+      content:'';
+      display: block;
+      transition-duration: 0.5s;
+      width: 100%;
+      
+    }
+    .q1::after
+    {   
+      transform: scaleY(0);
+      transform-origin: bottom;
+    }
+    .center_button:hover .q1::after
+    {
+      transform: scaleY(1);      
+    }
+    .q2::after
+    {   
+      transform: scaleX(0);
+      transform-origin: 10%;
+    }
+    .center_button:hover .q2::after
+    {
+      transform: scaleX(1);      
+    }
+    .q3::after
+    {   
+      transform: scaleY(0);
+      transform-origin: top;
+    }
+    .center_button:hover .q3::after
+    {
+      transform: scaleY(1);      
+    }
+    .q4::after
+    {   
+      transform: scaleX(0);
+      transform-origin: right;
+    }
+    .center_button:hover .q4::after
+    {
+      transform: scaleX(1);      
+    }
+    .center_button:hover
+    {
+      cursor: pointer;
+    }
+    input:focus:not(input[type="checkbox"])
+    {
+      box-shadow: 1px 1px 10px red;
+      width: 100%;
+    }
+    table
+    {
+      width: 100%;
+    }
+    label::selection
+    {
+      background-color: inherit;
+    }
+    label:hover
+    {
+      cursor: auto;
+    }
+    label
+    {
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      color: rgb(170, 170, 170);
+      background-color: white;
+      transition-duration: 0.3s;
+    }
+    input:focus+label
+    {
+        transform: translateY(-16px) translateX(-8px) scale(0.7);
+        color:black;
+        
+    }
+    .option
+    {
+      padding: 5px;
+      border-radius: 4px;
+    }
+    @media screen and (min-width:100px) and (max-width:900px) {
+      body
+      {
+        flex-direction: column;
+      }
+      .div-50
+      {
+        width: 100%;
+        height: auto;
+        
+      }
+     
+    }
+  </style>
 </head>
 <body>
-    
+  <div class="div-50">
+      <table>
+        <tr>
+          <td style="vertical-align: baseline;">
+            The Task
+          </td>
+          <td style="vertical-align: baseline;">
+            <div class="input">
+               <input type="text" class="task lab" id="task">
+              <label for="task">Enter The Task</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="vertical-align: baseline;">
+            The Date
+          </td>
+          <td style="vertical-align: baseline;">
+            <div class="input" style="margin-top: 10px;">
+               <input type="date" class="date lab" id="Date">
+              
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="vertical-align: baseline;">
+            The priority
+          </td>
+          <td style="vertical-align: baseline;">
+            <div class="input" style="margin-top: 10px;">
+               <input type="number" min="1" value="1" class="priority lab" id="priority">
+              <label for="priority">Enter The priority</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+
+          </td>
+          <td colspan="1" style="vertical-align: baseline; ">
+            <div class="button" >
+             <div class="center_button">
+             <div class="q1 q">
+
+             </div>
+             <div class="q2 q">
+              
+             </div>
+             <div class="q3 q">
+
+             </div>
+             <div class="q4 q">
+
+             </div>
+             </div>
+           </div>
+          </td>
+         
+        </tr>
+      </table>
+  </div>
+  <div class="div-50">
+    <table>
+      <tr>
+        <td>
+          Sort tasks
+        </td>
+        <td>
+          <select name="" class="option" id="">
+            <option value="Sort tasks by the Done Tasks">Sort tasks by the Done Tasks</option>
+            <option value="Sort tasks by the due date">Sort tasks by the due date</option>
+            <option value="Sort tasks by the priority">Sort tasks by the priority</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>
+            Clear The Tasks
+        </td>
+        <td>
+          <div class="button" style="margin-left: -12px;">
+            <div class="center_button">
+            <div class="q1 q">
+
+            </div>
+            <div class="q2 q">
+             
+            </div>
+            <div class="q3 q">
+
+            </div>
+            <div class="q4 q">
+
+            </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  
+    <div class="tasksList">
+     
+      
+    </div>
+  </div>
 </body>
+<script>
+
+  class Task
+  {
+      date;
+      task;
+      isDone;
+      priority;
+     constructor(date,task,priority)
+     {
+      this.date=date;
+      this.task=task;
+      this.isDone=false;
+      this.priority=priority
+     }
+     
+  }
+  Object.prototype.description=function(val)
+  {
+    this.task=val;
+  }
+  Object.prototype.dueDate=function(val)
+  {
+    this.date=val;
+  }
+  Object.prototype.thePriority=function(val)
+  {
+    this.priority=val;
+  }
+
+
+
+  function print(arrayData)
+  { 
+    let TaskList=document.querySelectorAll(".tasksList")[0];
+    TaskList.innerHTML="";
+    for(let i=0;i<arrayData.length;i++)
+    {
+      let a=document.createElement("div");
+    a.className="Task_card";
+    if(arrayData[i].isDone==true)
+    {
+      a.innerHTML=`
+    <div class="delete">
+            &times;
+        </div>
+        <div class="data">
+          ${arrayData[i].task}
+          <br>
+          ${arrayData[i].date}
+          <br>
+          ${arrayData[i].priority}
+          
+        </div>
+        <div class="done">
+          <input class="chk" type="checkbox" checked>
+        </div>
+    `;
+    }
+    else
+    {
+      a.innerHTML=`
+    <div class="delete">
+            &times;
+        </div>
+        <div class="data">
+          ${arrayData[i].task}
+          <br>
+          ${arrayData[i].date}
+          <br>
+          ${arrayData[i].priority}
+          
+        </div>
+        <div class="done">
+          <input class="chk" type="checkbox">
+        </div>
+    `;
+    }
+    TaskList.append(a)
+    }
+
+    let deletes=document.querySelectorAll(".delete");
+
+    deletes.forEach((element,index) => {
+      element.onclick=function()
+      {
+        arr.splice(index,1);
+        print(arr);
+        console.log("P")
+      }
+    });
+    let checkbox=document.querySelectorAll(".chk");
+    checkbox.forEach((ele,ind) => {
+       ele.onclick=function()
+       {
+        arr[ind].isDone=true;
+        
+        print(arr);
+       }
+    });
+  }
+
+
+  let inputs=document.querySelectorAll("input");
+  let labels=document.querySelectorAll("label");
+  let arr=new Array();
+  
+  document.body.onload=function()
+  {
+    labels[1].style.transform="translateY(-16px) translateX(-8px) scale(0.7)";
+          labels[1].style.color="black";
+  }
+  inputs.forEach((element,index) => {
+    element.addEventListener('keyup',(e)=>{
+
+
+
+      
+      if(index<1)
+      {
+        if(element.value.length>0)
+        {
+          labels[index].style.transform="translateY(-16px) translateX(-8px) scale(0.7)";
+          labels[index].style.color="black";
+        }
+        else
+        {
+          labels[index].style.transform="translateY(0px) translateX(0px) scale(1)";
+          labels[index].style.color="grey";
+        }
+      }
+      
+
+
+    })
+   
+  });
+  let Add=document.querySelectorAll(".center_button")[0];
+  let Clear=document.querySelectorAll(".center_button")[1];
+
+  Clear.onclick=function()
+  {
+    arr=[];
+    print(arr);
+  }
+  Add.onclick=function()
+  {
+    let TaskList=document.querySelectorAll(".tasksList")[0];
+    let TaskName=document.querySelectorAll(".task")[0];
+    let TaskDate=document.querySelectorAll(".date")[0];
+    let TaskPriority=document.querySelectorAll(".priority")[0];
+    let T=new Task();
+    T.description(TaskName.value);
+    T.dueDate(TaskDate.value);
+    T.thePriority(TaskPriority.value);
+    arr.push(T);
+    
+   
+    print(arr);
+    console.log(arr);
+
+  
+  }
+  document.querySelector("select").onchange=function()
+  {
+    if(document.querySelector("select").value=="Sort tasks by the due date")
+    {
+      console.log("date");
+      let sortByDate=arr;
+      for(let i=0;i<sortByDate.length;i++)
+      {
+        for(let j=0;j<sortByDate.length-1-i;j++)
+        {
+          let a=new Date(sortByDate[j].date);
+          let b=new Date(sortByDate[j+1].date);
+          console.log(a);
+          console.log(b);
+          if(a>b)
+      {
+        [sortByDate[j],sortByDate[j+1]]=[sortByDate[j+1],sortByDate[j]]
+      }
+        }
+      }
+      console.log(sortByDate)
+      print(sortByDate);
+    }
+    else if(document.querySelector("select").value=="Sort tasks by the priority")
+    {
+      console.log("date");
+      let sortBypriority=arr;
+      for(let i=0;i<sortBypriority.length;i++)
+      {
+        for(let j=0;j<sortBypriority.length-1-i;j++)
+        {
+          let a=sortBypriority[j].priority
+          let b=sortBypriority[j+1].priority
+          console.log(a);
+          console.log(b);
+          if(a>b)
+      {
+        [sortBypriority[j],sortBypriority[j+1]]=[sortBypriority[j+1],sortBypriority[j]]
+      }
+        }
+      }
+      console.log(sortBypriority)
+      print(sortBypriority);
+    }
+    else if(document.querySelector("select").value=="Sort tasks by the Done Tasks")
+    {
+        let filter=arr.copyWithin();
+        filter=filter.filter(function(element)
+        {
+          if(element.isDone==true)
+          {
+            return element;
+          }
+        })
+
+        console.log(filter)
+        print(filter);
+    }
+  }
+  
+
+
+  
+</script>
+
 </html>
